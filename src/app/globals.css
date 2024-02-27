@@ -31,3 +31,18 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Gira o Chevron chevron-right para baixo */
+.chevron-icon {
+  transform: rotate(90deg);
+}
+
+form {
+  width: auto;
+}
+
+
+input[type="checkbox"] {
+  height: 2em;
+  width: 1.5rem;
+}
