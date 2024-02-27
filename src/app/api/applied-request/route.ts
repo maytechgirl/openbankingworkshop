@@ -105,7 +105,7 @@ export async function GET() {
         options: optionsList,  // Data to be shared
         consumidor: doc.value.consumidor,
         identificacaoCliente: doc.value.identificacaoCliente,
-        codigoSolitacao: '123456',
+        codigoSolitacao: doc.value.idProcesso,
         receptor: 'Receptor X',
         dataConsent: new Date().toISOString(),
         prazo: doc.value.prazo,

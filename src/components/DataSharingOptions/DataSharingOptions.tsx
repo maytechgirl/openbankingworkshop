@@ -30,7 +30,7 @@ const DataSharingOptions: React.FC<DataSharingOptionsProps> = ({ optionsList }) 
   return (
     <div>
       <label htmlFor="dataConsent" className="font-bold">
-        Dados a serem compartilhados:
+        Datos para compartir:
       </label>
       {optionsList.map((option, index) => (
         <div key={index}>

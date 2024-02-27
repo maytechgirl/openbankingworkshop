@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -14,6 +13,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         //     headers: { "Content-Type": "application/json" },
         // });
 
+        // Código aleatório de numeros inteiros, por estética
+        const idProcesso = Math.floor(Math.random() * 1000000);
         // Enviando os dados para o endpoint
         const response = await fetch("http://localhost:3000/api/accept-terms-request", {
             method: "POST",
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 identificacaoCliente: identificacaoCliente,
                 selectedGroups: selectedGroups,
                 prazo: prazo,
-                idProcesso: randomUUID(),
+                idProcesso: idProcesso
             }),            
         });
 

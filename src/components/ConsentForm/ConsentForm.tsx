@@ -170,14 +170,14 @@ export default function ConsentForm() {
                 <h1 className="text-3xl font-bold text-center mb-5">Consentimento</h1>
                 
                 <ReadOnlyInputXl label="Consumidor" id="consumidor" value="Empresa média LTDA" readOnly />
-                <ReadOnlyInputXl label="Identificação do cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
+                <ReadOnlyInputXl label="Identificación del cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
                 
                 <hr />
                 <div className="mb-4 mt-3">
-                    <p>A fim de oferecer o serviço A, o Receptor X precisa coletar algumas informações.</p>
+                    <p>Para proporcionar el servicio A, el Receptor X necesita recopilar algunas informaciones.</p>
                 </div>
                 <div className="mb-4">
-                    <label className="font-bold" htmlFor="institituição">Instituição transmissora:</label>
+                    <label className="font-bold" htmlFor="institituição">Institución transmisora:</label>
 
                     <select id="instituicao" name="instituicao" className="bg-violet-800 text-white rounded-md p-2 m-2">
                         {options.map((option, index) => (
@@ -188,7 +188,7 @@ export default function ConsentForm() {
 
                 
                 <div>
-                    <h2 className="font-bold" >Dados a serem compartilhados</h2>
+                    <h2 className="font-bold" >Datos para compartir</h2>
                     {checkboxes.map((checkbox, index) => (
                         <div key={index}>
                             <div className="flex">
@@ -232,9 +232,9 @@ export default function ConsentForm() {
                 <hr></hr>
                 <br></br>
                 <div className="ml-0 mt-4">
-                    <label htmlFor="prazo">Prazo:</label>
+                    <label htmlFor="prazo">término:</label>
                     <select id="prazo" name="prazo" className="bg-violet-800 text-white rounded-md p-2 m-2">
-                        <option value="1">1 mês</option>
+                        <option value="1">1 mes</option>
                         <option value="2">2 meses</option>
                         <option value="3">3 meses</option>
                         <option value="6">6 meses</option>
@@ -242,17 +242,14 @@ export default function ConsentForm() {
                     </select>
                 </div>
                 <br></br>
-                {/* <div>
-                    <input type="checkbox" id="termos" name="termos" value="termos" onChange={handleSubmit} />
-                    <label htmlFor="termos" >Termos e condições</label>
-                </div> */}
+
                 <CheckBoxStyled
                     wrapperClassName="flex items-center justify-center space-x-2"
                     className="permission-checkbox"
                     id="termos"
                     name="termos"
                     value="termos"
-                    labelText="Termos e condições"
+                    labelText="Términos y Condiciones"
                     labelClassName="custom-label-link"
                     onChange={handleSubmit} 
                 />

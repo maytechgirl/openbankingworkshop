@@ -62,29 +62,29 @@ export default function Application() {
         responseJson? (
             <main className="flex min-h-screen flex-col items-center justify-between px-24 py-8 bg-white">
             <div className="flex flex-col justify-center items-center w-full text-xl text-black" >
-                <h1 className="text-3xl font-bold mb-5">Efetivação da solicitação</h1>
+                <h1 className="text-3xl font-bold mb-5">Cumplimiento de la Solicitud</h1>
                 <div className="flex flex-row text-xl text-black mb-5 w-min">
                     <div className="p-4 custom-icon w-56">
                         <img src="/checkmark.svg" alt="check" />
                     </div>
                     <div >
-                        Mônica, sua solicitação de compartilhamento de dados foi efetivada com sucesso!
+                        Mônica, ¡tu solicitud para compartir datos fue exitosa!
                     </div>
                 </div>
 
                 <div className="mb-4 bg-gray-100 w-auto p-4 rounded-xl text-1xl">
+                    <ReadOnlyInput label="Código de solicitud" id="codigoSolitacao" value={responseJson?.codigoSolitacao} readOnly />
                     <ReadOnlyInput label="Consumidor" id="consumidor" value={responseJson?.consumidor} readOnly />
-                    <ReadOnlyInput label="Identificação do cliente" id="cnpj" value={responseJson?.identificacaoCliente} readOnly />
-                    <ReadOnlyInput label="Código de solicitação" id="codigoSolitacao" value={responseJson?.codigoSolitacao} readOnly />
+                    <ReadOnlyInput label="Identificación del cliente" id="cnpj" value={responseJson?.identificacaoCliente} readOnly />
                     <ReadOnlyInput label="Receptor" id="receptor" value={responseJson?.receptor} readOnly />
-                    <ReadOnlyInput label="Data de consentimento" id="dataConsent" value={responseJson?.dataConsent} readOnly />
+                    <ReadOnlyInput label="Fecha de consentimiento" id="dataConsent" value={responseJson?.dataConsent} readOnly />
 
                     <DataSharingOptions optionsList={optionsList} />
-                    <ReadOnlyInput label="Prazo" id="prazo" value={`${responseJson?.prazo}`} readOnly />
+                    <ReadOnlyInput label="Término" id="prazo" value={`${responseJson?.prazo}`} readOnly />
                     
                 </div>
                     <div className="mb-4 text-center align-center w-96">
-                        Você pode iniciar um novo fluxo de solicitação ou continuar seu processo anterior
+                        Puede iniciar un nuevo flujo de solicitud o continuar su proceso anterior
                     </div>
                     <button className="bg-violet-800 hover:bg-violet-900 text-white font-bold m-3 py-3 px-4 rounded w-80" onClick={() => window.location.href = `http://localhost:3001/data-sharing`}>
                         Continuar 
