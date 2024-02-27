@@ -31,6 +31,7 @@ export async function POST(req:any, res:any) {
     try {
         let data = await req.json();
 
+
         if (!data.idProcesso || !data.consent) {
             return new Response("Dados incompletos", { status: 400 });
         }
@@ -54,6 +55,7 @@ export async function POST(req:any, res:any) {
                 consent: data.consent
             };
         }
+
         const yamlStr = yaml.dump(doc);
         fs.writeFileSync(filePath, yamlStr, 'utf8');
         

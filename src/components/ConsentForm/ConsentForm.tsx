@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import CheckBoxStyled from "../CheckBoxStyled/CheckBoxStyled";
-import ReadOnlyInput from "../ReadOnlyInput/ReadOnlyInput";
+import ReadOnlyInputXl from "../ReadOnlyInputXl/ReadOnlyInputXl";
 import "./ConsentForm.css";
 
 // esse componente será quebrado em mais partes
@@ -169,16 +169,8 @@ export default function ConsentForm() {
             <form className="flex flex-col text-xl text-black">
                 <h1 className="text-3xl font-bold text-center mb-5">Consentimento</h1>
                 
-                {/* <div className="mb-4">
-                    <label className="font-bold" htmlFor="consumidor">Consumidor:</label>
-                    <input id="consumidor" type="text" name="consumidor" value="Empresa média LTDA" readOnly />
-                </div>
-                <div className="mb-4">
-                    <label className="font-bold" htmlFor="cnpj">Identificação do cliente:</label>
-                    <input id="cnpj" type="text" name="cnpj" value="01.234.567/0001-89" readOnly />
-                </div> */}
-                <ReadOnlyInput label="Consumidor" id="consumidor" value="Empresa média LTDA" readOnly />
-                <ReadOnlyInput label="Identificação do cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
+                <ReadOnlyInputXl label="Consumidor" id="consumidor" value="Empresa média LTDA" readOnly />
+                <ReadOnlyInputXl label="Identificação do cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
                 
                 <hr />
                 <div className="mb-4 mt-3">
@@ -187,12 +179,6 @@ export default function ConsentForm() {
                 <div className="mb-4">
                     <label className="font-bold" htmlFor="institituição">Instituição transmissora:</label>
 
-                    {/* min-width: 10rem;
-                    padding: 5px 13px;
-                    background-color: #642ae1;
-                    color: #fff;
-                    border-radius: 7px;
-                    font-weight: 500; */}
                     <select id="instituicao" name="instituicao" className="bg-violet-800 text-white rounded-md p-2 m-2">
                         {options.map((option, index) => (
                             <option key={index} value={option}>{option}</option>
@@ -206,10 +192,6 @@ export default function ConsentForm() {
                     {checkboxes.map((checkbox, index) => (
                         <div key={index}>
                             <div className="flex">
-                                {/* <div className="flex items-center space-x-2">
-                                    <input type="checkbox" className={`permission-group permission-group-${index}`} id={`group-${checkbox.id}`} name={`group-${checkbox.id}`} value={`${checkbox.id}`}/>
-                                    <label htmlFor={`group-${checkbox.id}`}>{checkbox.displayName}</label>
-                                </div> */}
                                 <CheckBoxStyled
                                     wrapperClassName="flex items-center space-x-2"
                                     className={`permission-group permission-group-${index}`}
@@ -219,25 +201,21 @@ export default function ConsentForm() {
                                     labelText={checkbox.displayName}
                                 />
 
-                                <img alt="chevron" onClick={() => showList(index)}  src="/chevron-right.svg" className="chevron-icon" />
+                                <img alt="chevron" onClick={() => showList(index)}  src="/chevron-right.svg" className="cursor-pointer chevron-icon m-1" />
                             </div>
                             
                             <ul className={`info-list-${index} info-list pl-5 permission-list`} hidden>
                                 {checkbox.permissions.map((permission: any, index: number) => (
                                     <li key={index} className="flex flex-col">
-                                        {/* <div className="flex items-center space-x-2">
-                                            <input type="checkbox" name={`permission-${checkbox.id}-${permission.id}`} value={`${permission.id}`} />
-                                            <label htmlFor={`permission-${permission.id}`}>{permission.name}</label>
-                                        </div> */}
                                         <CheckBoxStyled
                                             wrapperClassName="flex items-center space-x-2"
                                             className="permission-checkbox"
                                             id={`permission-${checkbox.id}-${permission.id}`}
                                             name={`permission-${checkbox.id}-${permission.id}`}
                                             value={`${permission.id}`}
-                                            labelFor={`permission-${checkbox.id}-${permission.id}`}
                                             labelText={permission.name}
                                         />
+                                        
                                         <div className="pl-9 text-sm mb-4">
                                             <span>{permission.detail}</span>
                                         </div>

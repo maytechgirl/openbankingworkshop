@@ -32,24 +32,27 @@ export async function GET() {
     const idProcesso = userData[0].value.idProcesso;
 
     const procData = await fetch(`http://localhost:3000/api/accept-terms-request`, {
+        cache: 'no-store',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache', 
         },
     })
     const proc = await procData.json();
     
     // const doc = proc.find((doc: any) => doc.value.idProcesso == idProcesso);
-    let doc = null;
+    let doc: any = null;
 
     for (const d of proc) {
+        
         if (d.value.idProcesso == idProcesso) {
             doc = d;
             break;
         }
     }
     
-    if (!doc.value){
+    if (doc == null || !doc.value){
         return new Response("Processo não encontrado", { status: 404 });
     }
 

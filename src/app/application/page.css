@@ -1,0 +1,4 @@
+input {
+    /* Deixa a caixa de input sem cor */
+    background-color:rgba(0, 0, 0, 0);
+}

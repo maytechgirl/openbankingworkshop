@@ -35,6 +35,7 @@ body {
 /* Gira o Chevron chevron-right para baixo */
 .chevron-icon {
   transform: rotate(90deg);
+  cursor: pointer;
 }
 
 form {

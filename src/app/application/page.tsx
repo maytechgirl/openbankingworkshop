@@ -1,5 +1,8 @@
 'use client'; // Como não há autenticação do usuário, precisamos obter as informaçoes do usuário a partir do "code"
 import React, { useEffect, useState } from "react";
+import DataSharingOptions from "../../components/DataSharingOptions/DataSharingOptions";
+import ReadOnlyInput from "../../components/ReadOnlyInput/ReadOnlyInput";
+import './page.css';
 
 type Content = {
     options: string[];
@@ -38,6 +41,14 @@ export default function Application() {
             data = JSON.parse(data);
             console.log(data.options);
             setResponseJson(data);
+            
+            // Se mês for igual  1, concatenamos " mês" se for maior, concatenamos " meses", só por estética
+            if (data.prazo == 1) {
+                data.prazo = "1 mês";
+            } else {
+                data.prazo = `${data.prazo} meses`;
+            }
+
             setOptionsList(data.options);
 
         })
@@ -49,65 +60,35 @@ export default function Application() {
     return (
         // Se responseJson E handleConsent estiverem setados, então renderiza o componente
         responseJson? (
-            <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white">
+            <main className="flex min-h-screen flex-col items-center justify-between px-24 py-8 bg-white">
             <div className="flex flex-col justify-center items-center w-full text-xl text-black" >
-                <h1>Efetivação da solicitação</h1>
-
-                <div className="flex justify-center items-center w-full text-xl text-black" >
-                    <div className="p-2">
+                <h1 className="text-3xl font-bold mb-5">Efetivação da solicitação</h1>
+                <div className="flex flex-row text-xl text-black mb-5 w-min">
+                    <div className="p-4 custom-icon w-56">
+                        <img src="/checkmark.svg" alt="check" />
                     </div>
-                    <div className="" >
+                    <div >
                         Mônica, sua solicitação de compartilhamento de dados foi efetivada com sucesso!
                     </div>
                 </div>
 
-                <div>
-                    <div className="mb-4">
-                        <label htmlFor="consumidor">Consumidor:</label>
-                        <input id="consumidor" type="text" name="consumidor" value={`${responseJson?.consumidor}`} readOnly />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="cnpj">Identificação do cliente:</label>
-                        <input id="cnpj" type="text" name="cnpj" value={`${responseJson?.identificacaoCliente}`} readOnly />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="codigoSolitacao">Código de solicitação:</label>
-                        <input id="codigoSolitacao" type="text" name="consumidor" value={`${responseJson?.codigoSolitacao}`} readOnly />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="receptor">Receptor:</label>
-                        <input id="receptor" type="text" name="receptor" value={`${responseJson?.receptor}`} readOnly />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="dataConsent">Data de consentimento:</label>
-                        <input id="dataConsent" type="text" name="dataConsent" value={`${responseJson?.dataConsent}`} readOnly />
-                    </div>
+                <div className="mb-4 bg-gray-100 w-auto p-4 rounded-xl text-1xl">
+                    <ReadOnlyInput label="Consumidor" id="consumidor" value={responseJson?.consumidor} readOnly />
+                    <ReadOnlyInput label="Identificação do cliente" id="cnpj" value={responseJson?.identificacaoCliente} readOnly />
+                    <ReadOnlyInput label="Código de solicitação" id="codigoSolitacao" value={responseJson?.codigoSolitacao} readOnly />
+                    <ReadOnlyInput label="Receptor" id="receptor" value={responseJson?.receptor} readOnly />
+                    <ReadOnlyInput label="Data de consentimento" id="dataConsent" value={responseJson?.dataConsent} readOnly />
 
-                    { <div>
-                        <label htmlFor="dataConsent">Dados a serem compartilhados:</label>
-                        
-                        {optionsList.map((option, index) => (
-                            <div key={index}>
-                                <h4>{option?.displayName}</h4>
-                                <ul>
-                                    {option?.permissions.map((permission, index) => (
-                                        <li key={index + permission.name} className="px-5">
-                                            {permission.name}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div> }
-                    <div>
-                        <label htmlFor="prazo">Prazo:</label>
-                        <input id="prazo" type="text" name="prazo" value={`${responseJson?.prazo}`} readOnly />
-                    </div>
+                    <DataSharingOptions optionsList={optionsList} />
+                    <ReadOnlyInput label="Prazo" id="prazo" value={`${responseJson?.prazo}`} readOnly />
+                    
                 </div>
-                    <div>
-                        Você pode iniciar um novo fluxo de solicitação ou continuar seu processo anterior.
-                        <button> Continuar </button>
+                    <div className="mb-4 text-center align-center w-96">
+                        Você pode iniciar um novo fluxo de solicitação ou continuar seu processo anterior
                     </div>
+                    <button className="bg-violet-800 hover:bg-violet-900 text-white font-bold m-3 py-3 px-4 rounded w-80" onClick={() => window.location.href = `http://localhost:3001/data-sharing`}>
+                        Continuar 
+                    </button>
                 </div>
         </main>
 
