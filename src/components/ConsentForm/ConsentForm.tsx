@@ -167,7 +167,7 @@ export default function ConsentForm() {
 
         <div className="flex flex-col justify-center items-center text-xl text-black">
             <form className="flex flex-col text-xl text-black">
-                <h1 className="text-3xl font-bold text-center mb-5">Consentimento</h1>
+                <h1 className="text-3xl font-bold text-center mb-5">Consentimiento</h1>
                 
                 <ReadOnlyInputXl label="Consumidor" id="consumidor" value="Empresa média LTDA" readOnly />
                 <ReadOnlyInputXl label="Identificación del cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
