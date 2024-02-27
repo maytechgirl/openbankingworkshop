@@ -1,8 +1,10 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import CheckBoxStyled from "../CheckBoxStyled/CheckBoxStyled";
+import ReadOnlyInput from "../ReadOnlyInput/ReadOnlyInput";
 import "./ConsentForm.css";
 
+// esse componente será quebrado em mais partes
 export default function ConsentForm() {
 
     type Option = {
@@ -87,7 +89,8 @@ export default function ConsentForm() {
         htmlCheckboxes.forEach(checkbox => {
             checkbox.addEventListener("change", () => {
                 
-                const list = checkbox.parentElement?.parentElement?.querySelector(".info-list");
+                const list = checkbox.parentElement?.parentElement?.parentElement?.querySelector(".info-list");
+
                 if (list) {
                     const listCheckboxes = list.querySelectorAll<HTMLInputElement>("input[type='checkbox']");
                     listCheckboxes.forEach(listCheckbox => {
@@ -165,14 +168,18 @@ export default function ConsentForm() {
         <div className="flex flex-col justify-center items-center text-xl text-black">
             <form className="flex flex-col text-xl text-black">
                 <h1 className="text-3xl font-bold text-center mb-5">Consentimento</h1>
-                <div className="mb-4">
+                
+                {/* <div className="mb-4">
                     <label className="font-bold" htmlFor="consumidor">Consumidor:</label>
                     <input id="consumidor" type="text" name="consumidor" value="Empresa média LTDA" readOnly />
                 </div>
                 <div className="mb-4">
                     <label className="font-bold" htmlFor="cnpj">Identificação do cliente:</label>
                     <input id="cnpj" type="text" name="cnpj" value="01.234.567/0001-89" readOnly />
-                </div>
+                </div> */}
+                <ReadOnlyInput label="Consumidor" id="consumidor" value="Empresa média LTDA" readOnly />
+                <ReadOnlyInput label="Identificação do cliente" id="cnpj" value="01.234.567/0001-89" readOnly />
+                
                 <hr />
                 <div className="mb-4 mt-3">
                     <p>A fim de oferecer o serviço A, o Receptor X precisa coletar algumas informações.</p>
@@ -228,6 +235,7 @@ export default function ConsentForm() {
                                             id={`permission-${checkbox.id}-${permission.id}`}
                                             name={`permission-${checkbox.id}-${permission.id}`}
                                             value={`${permission.id}`}
+                                            labelFor={`permission-${checkbox.id}-${permission.id}`}
                                             labelText={permission.name}
                                         />
                                         <div className="pl-9 text-sm mb-4">
