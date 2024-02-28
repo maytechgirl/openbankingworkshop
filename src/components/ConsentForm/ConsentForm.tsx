@@ -232,7 +232,7 @@ export default function ConsentForm() {
                 <hr></hr>
                 <br></br>
                 <div className="ml-0 mt-4">
-                    <label htmlFor="prazo">término:</label>
+                    <label htmlFor="prazo" className="font-bold px-2">Plazo:</label>
                     <select id="prazo" name="prazo" className="bg-violet-800 text-white rounded-md p-2 m-2">
                         <option value="1">1 mes</option>
                         <option value="2">2 meses</option>
