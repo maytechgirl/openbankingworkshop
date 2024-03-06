@@ -8,30 +8,82 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         const { consumidor, identificacaoCliente, selectedGroups, prazo } = await req.json();
 
-        // Teste
-        // return new Response(JSON.stringify({ consumidor, identificacaoCliente, selectedGroups }), {
-        //     headers: { "Content-Type": "application/json" },
-        // });
+        const transmissoraUrl = process.env.TRANSMISSORA_URL;
+        if (!transmissoraUrl) {
+            return new Response("URL da transmissora não encontrada", { status: 400 });
+        }
 
-        // Código aleatório de numeros inteiros, por estética
-        const idProcesso = Math.floor(Math.random() * 1000000);
-        // Enviando os dados para o endpoint
-        const response = await fetch("http://localhost:3000/api/accept-terms-request", {
+
+        const dataUrl = process.env.DATA_URL;
+        if (!dataUrl) {
+            return new Response("URL dos dados não encontrada", { status: 400 });
+        }
+
+        // Qualquer coisa, já que a api do mockapi.io faz autoincremento, então o idProcesso pode ser qualquer coisa
+        const anyIdProceso = Math.floor(Math.random() * 1000);
+
+        const dataToPost = {
+            consumidor: consumidor,
+            identificacaoCliente: identificacaoCliente,
+            selectedGroups: selectedGroups,
+            prazo: prazo,
+            terms: 'pending',
+            idProcesso: anyIdProceso
+        };
+
+        // realizamos um POST em DATA_URL, para criar o processo
+        const responseNewProcess = await fetch(dataUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                consumidor: consumidor,
-                identificacaoCliente: identificacaoCliente,
-                selectedGroups: selectedGroups,
-                prazo: prazo,
-                idProcesso: idProcesso
-            }),            
+            body: JSON.stringify(dataToPost),
         });
 
-        // Retornando a resposta do endpoint
-        return response;
+        // Vamos mudar o idProcesso para o id gerado pelo mockApi.
+        const idProcesso = (await responseNewProcess.json()).idProcesso;
+
+
+        console.log(idProcesso)
+
+        // Simula o processo de guardar o id do processo do usuário
+        const fs = require('fs');
+        const yaml = require('js-yaml');
+        const path = require('path');
+        const filePath = path.resolve('src/app/api/demo-save-consent/demo.yml');
+        const file = fs.readFileSync(filePath, 'utf8');
+        const doc = yaml.load(file);
+
+        const currentHardCodedUser = 'usuario'
+
+        if (doc[currentHardCodedUser]) {
+            doc[currentHardCodedUser] = {
+                idProcesso: idProcesso,
+                consent: 'pending'
+            };
+        } else {
+            doc[currentHardCodedUser] = {
+                idProcesso: idProcesso,
+                consent: 'pending'
+            };
+        }
+
+        const yamlString = yaml.dump(doc);
+
+        fs.writeFileSync(filePath, yamlString, 'utf8');
+
+        
+        const apiUrl = process.env.TRANSMISSORA_URL;
+
+        if (!apiUrl) {
+            return new Response("URL da transmissora não encontrada", { status: 400 });
+        }
+        
+        const urlToRedirect = process.env.TRANSMISSORA_URL + "/authorize/" + idProcesso;
+        return new Response(JSON.stringify(urlToRedirect), {
+            headers: { "Content-Type": "application/json" },
+        });
+
     } catch (error) {
         console.error("Erro ao processar a solicitação:", error);
         // Retornando uma resposta de erro

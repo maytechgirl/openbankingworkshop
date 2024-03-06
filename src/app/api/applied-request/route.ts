@@ -31,38 +31,28 @@ export async function GET() {
 
     const idProcesso = userData[0].value.idProcesso;
 
-    const procData = await fetch(`http://localhost:3000/api/accept-terms-request`, {
-        cache: 'no-store',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache', 
-        },
-    })
-    const proc = await procData.json();
-    
-    // const doc = proc.find((doc: any) => doc.value.idProcesso == idProcesso);
-    let doc: any = null;
-
-    for (const d of proc) {
-        
-        if (d.value.idProcesso == idProcesso) {
-            doc = d;
-            break;
-        }
+    const dataUrl = process.env.DATA_URL;
+    if (!dataUrl) {
+        return new Response("URL dos dados não encontrada", { status: 400 });
     }
-    
-    if (doc == null || !doc.value){
+
+    // Realizamos um get em DATA_URL + /idProcesso
+    const responseProcData = await fetch(dataUrl + "/" + idProcesso);
+    const procData = await responseProcData.json();
+
+
+    const selectedGroups = procData.selectedGroups;
+
+    if (!procData) {
         return new Response("Processo não encontrado", { status: 404 });
     }
 
-    const selectedGroups = doc.value.selectedGroups;
-
-    if (!doc) {
-        return new Response("Processo não encontrado", { status: 404 });
+    const apiUrl = process.env.PERMISSIONS_OPTIONS_API_URL
+    if(!apiUrl) {
+        return new Response("API URL não encontrada", { status: 400 });
     }
-
-    const response = await fetch("https://run.mocky.io/v3/a4ff0f51-2b34-4369-ac5d-3deeb9797410");
+    
+    const response = await fetch(apiUrl);
     const dataApi = await response.json();
 
 
@@ -103,12 +93,12 @@ export async function GET() {
 
     const respData = { 
         options: optionsList,  // Data to be shared
-        consumidor: doc.value.consumidor,
-        identificacaoCliente: doc.value.identificacaoCliente,
-        codigoSolitacao: doc.value.idProcesso,
+        consumidor: procData.consumidor,
+        identificacaoCliente: procData.identificacaoCliente,
+        codigoSolitacao: procData.idProcesso,
         receptor: 'Receptor X',
         dataConsent: new Date().toISOString(),
-        prazo: doc.value.prazo,
+        prazo: procData.prazo,
     };
 
     const responseJson = JSON.stringify(respData);

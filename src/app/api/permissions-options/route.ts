@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const response = await fetch("https://run.mocky.io/v3/a4ff0f51-2b34-4369-ac5d-3deeb9797410");
+
+    const apiUrl = process.env.PERMISSIONS_OPTIONS_API_URL
+    if(!apiUrl) {
+        return new Response("API URL não encontrada", { status: 400 });
+    }
+
+    const response = await fetch(apiUrl);
     const data = await response.json();
 
 

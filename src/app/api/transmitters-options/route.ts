@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const response = await fetch("https://run.mocky.io/v3/88715074-23c3-4d87-bbeb-04b8973fec2a");
+
+    const apiUrl = process.env.TRANSMITTERS_OPTIONS_API_URL
+    if(!apiUrl) {
+        return new Response("API URL não encontrada", { status: 400 });
+    }
+    
+    const response = await fetch(apiUrl);
     const data = await response.json();
     
     // Faremos um for no data para obter uma lista com todos os CustomerFriendlyDescription
