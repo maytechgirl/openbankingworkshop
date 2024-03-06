@@ -38,8 +38,6 @@ export default function ConsentForm() {
     const [options, setOptions] = useState<string[]>([]);
     const [checkboxes, setCheckboxes] = useState<Option[]>([]);
 
-    console.log(checkboxes);
-
     useEffect(() => {
         async function fetchData() {
             try {
